@@ -29,7 +29,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/channel")
 @RefreshScope
-@Api(description = "渠道模块Controller")
+@Api(description = "渠道模块")
 @Validated
 public class ChannelController {
 

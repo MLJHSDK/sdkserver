@@ -16,6 +16,11 @@
             <artifactId>sdkserver-common</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.miaoleyouxi.miaolesdkserver</groupId>
+            <artifactId>sdkserver-pojo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <!--<dependency>
             <groupId>org.springframework.cloud</groupId>

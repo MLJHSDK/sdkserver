@@ -57,7 +57,7 @@
       #{sdkName,jdbcType=VARCHAR}, #{nameSuffix,jdbcType=VARCHAR}, #{payCallbackUrl,jdbcType=VARCHAR},
       #{verifyClass,jdbcType=VARCHAR}, #{orderUrl,jdbcType=VARCHAR})
     </insert>
-    <select id="findAllChannelMaster" resultType="ChannelMaster">
+    <select id="findAllChannelMaster" resultType="com.sdkserver.channel.model.ChannelMaster">
       SELECT cm.* FROM ml_channel_master cm;
     </select>
 

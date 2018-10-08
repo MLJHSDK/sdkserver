@@ -20,19 +20,19 @@
                plat_ID,verify_Class
     </sql>
     <!-- 查找所有的渠道记录 -->
-    <select id="findAllChannels" resultType="Channel">
+    <select id="findAllChannels" resultType="com.sdkserver.pojo.Channel">
         SELECT <include refid="ml_channel_colums"/> FROM ml_channel;
     </select>
 
     <!-- 插入一条渠道数据-->
-    <insert id="addChannel" parameterType="Channel">
+    <insert id="addChannel" parameterType="com.sdkserver.pojo.Channel">
         INSERT INTO ml_channel(<include refid="ml_channel_colums"/>)
                     VALUES(#{appID},#{authUrl},#{channelID},#{cpAppID},#{cpAppKey},#{cpAppSecret},#{cpConfig},#{cpID},#{cpPayID},
                     #{cpPayKey},#{cpPayPriKey},#{masterID},#{openOwnPayChannel},#{openPayFlag},#{orderUrl},#{payCallbackUrl},
                     #{platId},#{verifyClass});
     </insert>
     <!-- 根据ChannelId查询一条渠道记录 -->
-    <select id="queryChannelByID" parameterType="Integer" resultType="Channel">
+    <select id="queryChannelByID" parameterType="Integer" resultType="com.sdkserver.pojo.Channel">
         SELECT c.* FROM ml_channel c WHERE c.channel_id = #{channelID};
     </select>
 
@@ -47,7 +47,7 @@
     </select>
 
     <!-- 更新渠道信息 -->
-    <update id="updateChannel" parameterType="Channel">
+    <update id="updateChannel" parameterType="com.sdkserver.pojo.Channel">
         UPDATE ml_channel
         <set>
             <if test="appID != null and appID > 0">
@@ -108,7 +108,7 @@
     <!--
         根据页面条件筛选渠道信息列表
     -->
-    <select id="findPageChannels" resultType="Channel">
+    <select id="findPageChannels" resultType="com.sdkserver.pojo.Channel">
         SELECT g.* from ml_channel g
         <where>
             <if test="kind == 'searchMasterName' and keyword != null and keyword != ''">
