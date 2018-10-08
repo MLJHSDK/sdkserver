@@ -1,0 +1,36 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: sdkserver-zuul
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true
+
+zuul:
+ #前缀
+  prefix: /sdkserver
+  ignored-services: "*"
+  #全部忽略用 "*"
+  #ignored-services: microservicecloud-dept
+
+
+  routes:
+    sso:
+      serviceId: sdkserver-server-sso
+      path: /sso/**
+    other:
+      serviceId: microservicecloud-config-dept-client
+      path: /hello/**
+
+info:
+  app.name: atguigu-microcloud
+  company.name: www.atguigu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

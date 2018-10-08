@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sdkserver.game.mapper.GameMapper">
+    <!-- 数据库表与实体类对应map -->
+    <resultMap id="BaseResultMap" type="com.sdkserver.game.model.Game">
+        <id column="app_id" property="appID" jdbcType="INTEGER"/>
+        <id column="pay_callback" property="payCallback" jdbcType="VARCHAR"/>
+        <result column="app_key" property="appkey" jdbcType="VARCHAR"/>
+        <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
+        <result column="app_rsa_pubkey" property="appRSAPubKey" jdbcType="VARCHAR"/>
+        <result column="app_rsa_prikey" property="appRSAPriKey" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="pay_callback_debug" property="payCallbackDebug" jdbcType="VARCHAR"/>
+        <result column="msdk_pay_callback" property="msdkPayCallback" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 根据游戏app_id来查找游戏 -->
+    <select id="queryGame" resultMap="BaseResultMap" parameterType="Integer">
+		select g.* from ml_game g where app_id = #{appID};
+	</select>
+
+    <!-- 保存游戏 -->
+    <insert id="saveGame" parameterType="com.sdkserver.game.model.Game">
+		INSERT INTO ml_game (app_id, pay_callback, app_key,
+      app_secret, app_rsa_pubkey, app_rsa_prikey,
+      name, pay_callback_debug, msdk_pay_callback,
+      create_time)
+      VALUES(#{appID,jdbcType=INTEGER}, #{payCallback,jdbcType=VARCHAR}, #{appkey,jdbcType=VARCHAR},
+      #{appSecret,jdbcType=VARCHAR}, #{appRSAPubKey,jdbcType=VARCHAR}, #{appRSAPriKey,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{payCallbackDebug,jdbcType=VARCHAR}, #{msdkPayCallback,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP})
+	</insert>
+
+    <!-- 查询所有游戏记录 -->
+    <select id="findAllGames" resultType="com.sdkserver.game.model.Game">
+        SELECT g.app_id,g.app_key,g.app_RSA_PriKey,g.app_RSA_PubKey,g.app_Secret,g.create_Time,g.msdk_Pay_Callback,
+               g.`name`,g.pay_Callback,g.pay_Callback_Debug
+               FROM ml_game g
+    </select>
+
+    <!-- 更新游戏 -->
+    <update id="updateGame" parameterType="com.sdkserver.game.model.Game">
+        update ml_game
+        <set>
+            <if test="payCallback != null">
+                pay_callback = #{payCallback,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="payCallbackDebug != null">
+                pay_callback_debug = #{payCallbackDebug,jdbcType=VARCHAR},
+            </if>
+            <if test="msdkPayCallback != null">
+                msdk_pay_callback = #{msdkPayCallback,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where app_id = #{appID,jdbcType=INTEGER}
+    </update>
+
+    <!-- 删除一个游戏 -->
+    <delete id="deleteGame" parameterType="Integer">
+        delete from ml_game where app_id = #{appId}
+    </delete>
+
+    <!-- 获取游戏记录总条数 -->
+    <select id="getGameTotalNum" resultType="Integer">
+        SELECT COUNT(app_id) FROM ml_game;
+    </select>
+
+    <!-- 分页查询game -->
+    <select id="findPageGames" resultType="com.sdkserver.game.model.Game">
+       SELECT g.* from ml_game g
+           <where>
+               <if test="kind == 'appId' and keyword != null">
+                    app_id like CONCAT('%',#{keyword},'%')
+               </if>
+               <if test="kind == 'name' and keyword != null">
+                    `name` like CONCAT('%',#{keyword},'%')
+               </if>
+               <if test="kind == 'appkey' and keyword != null">
+                   app_key like CONCAT('%',#{keyword},'%')
+               </if>
+               <if test="kind == 'appSecret' and keyword != null">
+                   app_Secret like CONCAT('%',#{keyword},'%')
+               </if>
+           </where>
+    </select>
+    <!--/*limit #{startIndex},#{pageSize};*/-->
+    <!-- 通过游戏名称查找游戏ID -->
+    <select id="queryAppIdByGameName" parameterType="String" resultType="Integer">
+        SELECT g.app_id FROM ml_game g WHERE g.name = #{gameName};
+    </select>
+</mapper>
+
+

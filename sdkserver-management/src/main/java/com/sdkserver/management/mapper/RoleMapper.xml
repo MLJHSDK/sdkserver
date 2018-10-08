@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sdkserver.management.mapper.RoleMapper">
+    <select id="roles" resultType="com.sdkserver.management.bean.Role">
+        SELECT * FROM ml_role where id!=6;
+    </select>
+    <insert id="addNewRole">
+        INSERT INTO ml_role set name=#{role},nameZh=#{roleZh}
+    </insert>
+    <delete id="deleteRoleById" parameterType="Long">
+        DELETE FROM ml_role WHERE id=#{rid}
+    </delete>
+</mapper>

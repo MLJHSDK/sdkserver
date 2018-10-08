@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sdkserver.auth.mapper.UserMapper">
+
+    <!--<insert id="addChannel" parameterType="Channel">-->
+        <!--INSERT INTO ml_channel(channelID,appID,masterID,cpID,cpAppID,cpAppKey,cpAppSecret,cpPayID,cpPayKey,cpPayPriKey,-->
+                    <!--cpConfig,openPayFlag,authUrl,payCallbackUrl,verifyClass,orderUrl)-->
+                    <!--VALUES(#{channelID},#{appID},#{masterID},#{cpID},#{cpAppID},#{cpAppKey},#{cpAppSecret},#{cpPayID},-->
+                    <!--#{cpPayKey},#{cpPayPriKey},#{cpConfig},#{openPayFlag},#{authUrl},#{payCallbackUrl},#{verifyClass},#{orderUrl});-->
+    <!--</insert>-->
+    <!--
+        ml_user表中列名sql片段
+     -->
+    <sql id="usercolum" >
+        id,
+        appID,
+        channelID,
+        channelUserID,
+        channelUserName,
+        channelUserNick,
+        createTime,
+        deviceID,
+        DeviceType,
+        firstCharge,
+        firstChargeTime,
+        lastLoginTime,
+        `name`,
+        token
+    </sql>
+    <!--
+            User queryUserById(int id);
+            根据玩家ID来查询玩家详细信息
+    -->
+    <select id="queryUserById" resultType="User" parameterType="Integer">
+        SELECT  <include refid="usercolum"/> FROM ml_user  WHERE id = #{id};
+    </select>
+
+    <!--
+        void deleteUserById(int id);
+        根据玩家ID来删除玩家记录
+     -->
+    <delete id="deleteUserById" parameterType="Integer">
+        DELETE FROM ml_user WHERE id = #{id};
+    </delete>
+
+</mapper>
+
+

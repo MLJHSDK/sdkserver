@@ -1,0 +1,157 @@
+spring:
+   application:
+    name: sdkserver-server-log
+#    cloud:
+#     bus:
+#       enabled: true
+#       trace:
+#         enabled: true
+
+#server:
+#  port: 8004
+#eureka:
+#  client: # 客户端进行Eureka注册的配置
+#    service-url:
+#      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+#  instance:
+#    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+#    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
+#    instance-generator: sdkserver-server-log  # 在信息列表时显示主机名称
+#    prefer-ip-address: true     # 访问的路径变为IP地址
+#spring:
+#  profiles: dev
+#  cloud:
+#    stream:
+#      binders: # 在此处配置要绑定的rabbitmq的服务信息；
+#        defaultRabbit: # 表示定义的名称，用于于binding整合
+#          type: rabbit # 消息组件类型
+#          environment: # 设置rabbitmq的相关的环境配置
+#            spring:
+#              rabbitmq:
+#               addresses: 192.168.23.129
+#               username: guest
+#               password: guest
+#               virtual-host: /
+#      bindings: # 服务的整合处理
+#        output: # 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明
+#          destination: logExchange # 表示要使用的Exchange名称定义
+#          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
+#          binder: defaultRabbit # 设置要绑定的消息服务的具体设置
+#  application:
+#    name: sdkserver-server-log
+
+
+
+
+
+
+#spring.cloud.bus.enabled=true
+#spring.cloud.bus.trace.enabled=true
+#management.endpoints.web.exposure.include=bus-refresh
+
+
+#server:
+#  port: 8004
+#
+#mybatis:
+#  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+#  type-aliases-package: com.sdkserver.log.model      # 所有Entity别名类所在包
+#  mapper-locations:
+#  - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+#
+#spring:
+#   application:
+#    name: sdkserver-server-log
+#   datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+#    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+#    url: jdbc:mysql://172.16.20.140:3307/u8sdk_db           # 数据库名称
+#    username: root
+#    password: root
+#    dbcp2:
+#      min-idle: 5                                           # 数据库连接池的最小维持连接数
+#      initial-size: 5                                       # 初始化连接数
+#      max-total: 5                                          # 最大连接数
+#      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+#   rabbitmq:
+#     host: 192.168.23.129
+#     port: 5672
+#     username: guest
+#     password: guest
+#
+#eureka:
+#  client: #客户端注册进eureka服务列表内
+##    eureka.client.register-with-eureka=false
+##    eureka.client.fetch-registry=false
+#    service-url:
+#      #defaultZone: http://localhost:7001/eureka
+#       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+#    register-with-eureka: false
+#    fetch-registry: false
+#  instance:
+#    instance-generator: sdkserver-server-log
+#    prefer-ip-address: true     #访问路径可以显示IP地址
+#
+#info:
+#  app.name: sdkserver-server-log
+#  company.name: www.miaoleyouxi.com
+#  build.artifactId: $project.artifactId$
+#  build.version: $project.version$
+
+
+
+#server:
+#  port: 8004
+#zwj: ssssssssss
+#mybatis:
+#  config-location: classpath:mybatis/mybatis.cfg.xml        # mybatis配置文件所在路径
+#  type-aliases-package: com.sdkserver.log.model      # 所有Entity别名类所在包
+#  mapper-locations:
+#  - classpath:mybatis/mapper/**/*.xml                       # mapper映射文件
+#
+#spring:
+#   profiles: dev
+#   application:
+#    name: sdkserver-server-log
+#    cloud:
+#     bus:
+#       enabled: true
+#       trace:
+#         enabled: true
+#   datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource            # 当前数据源操作类型
+#    driver-class-name: org.gjt.mm.mysql.Driver              # mysql驱动包
+#    url: jdbc:mysql://172.16.20.140:3307/u8sdk_db          # 数据库名称
+#    username: root
+#    password: root
+#    dbcp2:
+#      min-idle: 5                                           # 数据库连接池的最小维持连接数
+#      initial-size: 5                                       # 初始化连接数
+#      max-total: 5                                          # 最大连接数
+#      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+#   rabbitmq:
+#     host: 192.168.23.129
+#     port: 5672
+#     username: guest
+#     password: guest
+#
+#eureka:
+#  client: #客户端注册进eureka服务列表内
+#    service-url:
+#      #defaultZone: http://localhost:7001/eureka
+#       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+#  instance:
+#    instance-generator: sdkserver-server-log
+#    prefer-ip-address: true     #访问路径可以显示IP地
+#management:
+#  security:
+#    enabled: false
+#
+#
+#info:
+#  app.name: sdkserver-server-log
+#  company.name: www.miaoleyouxi.com
+#  build.artifactId: $project.artifactId$
+#  build.version: $project.version$
+
+

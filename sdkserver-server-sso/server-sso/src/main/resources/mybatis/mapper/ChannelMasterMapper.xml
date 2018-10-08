@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdkserver.channel.mapper.ChannelMasterMapper" >
+  <resultMap id="BaseResultMap" type="com.sdkserver.channel.model.ChannelMaster" >
+    <id column="master_id" property="masterId" jdbcType="INTEGER" />
+    <result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
+    <result column="master_name" property="masterName" jdbcType="VARCHAR" />
+    <result column="sdk_name" property="sdkName" jdbcType="VARCHAR" />
+    <result column="name_suffix" property="nameSuffix" jdbcType="VARCHAR" />
+    <result column="pay_callback_url" property="payCallbackUrl" jdbcType="VARCHAR" />
+    <result column="verify_class" property="verifyClass" jdbcType="VARCHAR" />
+    <result column="order_url" property="orderUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <kind id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </kind>
+  <kind id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </kind>
+  <kind id="Base_Column_List" >
+    master_id, auth_url, master_name, sdk_name, name_suffix, pay_callback_url, verify_class, 
+    order_url
+  </kind>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sdkserver.channel.model.ChannelMasterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ml_channel_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ml_channel_master
+    where master_id = #{masterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ml_channel_master
+    where master_id = #{masterId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.sdkserver.channel.model.ChannelMasterExample" >
+    delete from ml_channel_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdkserver.channel.model.ChannelMaster" >
+    insert into ml_channel_master (master_id, auth_url, master_name, 
+      sdk_name, name_suffix, pay_callback_url, 
+      verify_class, order_url)
+    values (#{masterId,jdbcType=INTEGER}, #{authUrl,jdbcType=VARCHAR}, #{masterName,jdbcType=VARCHAR}, 
+      #{sdkName,jdbcType=VARCHAR}, #{nameSuffix,jdbcType=VARCHAR}, #{payCallbackUrl,jdbcType=VARCHAR}, 
+      #{verifyClass,jdbcType=VARCHAR}, #{orderUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdkserver.channel.model.ChannelMaster" >
+    insert into ml_channel_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="masterId != null" >
+        master_id,
+      </if>
+      <if test="authUrl != null" >
+        auth_url,
+      </if>
+      <if test="masterName != null" >
+        master_name,
+      </if>
+      <if test="sdkName != null" >
+        sdk_name,
+      </if>
+      <if test="nameSuffix != null" >
+        name_suffix,
+      </if>
+      <if test="payCallbackUrl != null" >
+        pay_callback_url,
+      </if>
+      <if test="verifyClass != null" >
+        verify_class,
+      </if>
+      <if test="orderUrl != null" >
+        order_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="masterId != null" >
+        #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="authUrl != null" >
+        #{authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="masterName != null" >
+        #{masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdkName != null" >
+        #{sdkName,jdbcType=VARCHAR},
+      </if>
+      <if test="nameSuffix != null" >
+        #{nameSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="payCallbackUrl != null" >
+        #{payCallbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyClass != null" >
+        #{verifyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="orderUrl != null" >
+        #{orderUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdkserver.channel.model.ChannelMasterExample" resultType="java.lang.Integer" >
+    select count(*) from ml_channel_master
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ml_channel_master
+    <set >
+      <if test="record.masterId != null" >
+        master_id = #{record.masterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.authUrl != null" >
+        auth_url = #{record.authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterName != null" >
+        master_name = #{record.masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sdkName != null" >
+        sdk_name = #{record.sdkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nameSuffix != null" >
+        name_suffix = #{record.nameSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payCallbackUrl != null" >
+        pay_callback_url = #{record.payCallbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyClass != null" >
+        verify_class = #{record.verifyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderUrl != null" >
+        order_url = #{record.orderUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ml_channel_master
+    set master_id = #{record.masterId,jdbcType=INTEGER},
+      auth_url = #{record.authUrl,jdbcType=VARCHAR},
+      master_name = #{record.masterName,jdbcType=VARCHAR},
+      sdk_name = #{record.sdkName,jdbcType=VARCHAR},
+      name_suffix = #{record.nameSuffix,jdbcType=VARCHAR},
+      pay_callback_url = #{record.payCallbackUrl,jdbcType=VARCHAR},
+      verify_class = #{record.verifyClass,jdbcType=VARCHAR},
+      order_url = #{record.orderUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sdkserver.channel.model.ChannelMaster" >
+    update ml_channel_master
+    <set >
+      <if test="authUrl != null" >
+        auth_url = #{authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="masterName != null" >
+        master_name = #{masterName,jdbcType=VARCHAR},
+      </if>
+      <if test="sdkName != null" >
+        sdk_name = #{sdkName,jdbcType=VARCHAR},
+      </if>
+      <if test="nameSuffix != null" >
+        name_suffix = #{nameSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="payCallbackUrl != null" >
+        pay_callback_url = #{payCallbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyClass != null" >
+        verify_class = #{verifyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="orderUrl != null" >
+        order_url = #{orderUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where master_id = #{masterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sdkserver.channel.model.ChannelMaster" >
+    update ml_channel_master
+    set auth_url = #{authUrl,jdbcType=VARCHAR},
+      master_name = #{masterName,jdbcType=VARCHAR},
+      sdk_name = #{sdkName,jdbcType=VARCHAR},
+      name_suffix = #{nameSuffix,jdbcType=VARCHAR},
+      pay_callback_url = #{payCallbackUrl,jdbcType=VARCHAR},
+      verify_class = #{verifyClass,jdbcType=VARCHAR},
+      order_url = #{orderUrl,jdbcType=VARCHAR}
+    where master_id = #{masterId,jdbcType=INTEGER}
+  </update>
+</mapper>

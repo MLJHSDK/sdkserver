@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sdkserver.channel.mapper.ChannelMasterMapper">
+    <resultMap id="BaseResultMap" type="com.sdkserver.channel.model.ChannelMaster">
+        <id column="master_id" property="masterID" jdbcType="INTEGER"/>
+        <result column="auth_url" property="authUrl" jdbcType="VARCHAR"/>
+        <result column="master_name" property="masterName" jdbcType="VARCHAR"/>
+        <result column="sdk_name" property="sdkName" jdbcType="VARCHAR"/>
+        <result column="name_suffix" property="nameSuffix" jdbcType="VARCHAR"/>
+        <result column="pay_callback_url" property="payCallbackUrl" jdbcType="VARCHAR"/>
+        <result column="verify_class" property="verifyClass" jdbcType="VARCHAR"/>
+        <result column="order_url" property="orderUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="updateBySelective" parameterType="com.sdkserver.channel.model.ChannelMaster">
+        update ml_channel_master
+        <set>
+
+            <if test="authUrl != null">
+                auth_url = #{authUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="masterName != null">
+                master_name = #{masterName,jdbcType=VARCHAR},
+            </if>
+            <if test="sdkName != null">
+                sdk_name = #{sdkName,jdbcType=VARCHAR},
+            </if>
+            <if test="nameSuffix != null">
+                name_suffix = #{nameSuffix,jdbcType=VARCHAR},
+            </if>
+            <if test="payCallbackUrl != null">
+                pay_callback_url = #{payCallbackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="verifyClass != null">
+                verify_class = #{verifyClass,jdbcType=VARCHAR},
+            </if>
+            <if test="orderUrl != null">
+                order_url = #{orderUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where master_id = #{masterID,jdbcType=INTEGER}
+
+    </update>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT cm.*
+        from ml_channel_master cm
+        where master_id = #{masterID,jdbcType=INTEGER}
+    </select>
+    <insert id="insert" parameterType="com.sdkserver.channel.model.ChannelMaster">
+    insert into ml_channel_master (master_id, auth_url, master_name,
+      sdk_name, name_suffix, pay_callback_url,
+      verify_class, order_url)
+    values (#{masterID,jdbcType=INTEGER}, #{authUrl,jdbcType=VARCHAR}, #{masterName,jdbcType=VARCHAR},
+      #{sdkName,jdbcType=VARCHAR}, #{nameSuffix,jdbcType=VARCHAR}, #{payCallbackUrl,jdbcType=VARCHAR},
+      #{verifyClass,jdbcType=VARCHAR}, #{orderUrl,jdbcType=VARCHAR})
+    </insert>
+    <select id="findAllChannelMaster" resultType="ChannelMaster">
+      SELECT cm.* FROM ml_channel_master cm;
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from ml_channel_master
+      where master_id = #{masterID,jdbcType=INTEGER}
+    </delete>
+
+    <!-- 分页查询game -->
+    <select id="findPageChannelMaster" resultMap="BaseResultMap">
+        SELECT cm.* from ml_channel_master cm
+        <where>
+            <if test="kind == 'MASTER_ID' and keyword != null">
+                master_id = #{keyword}
+            </if>
+            <if test="kind == 'MASTER_NAME' and keyword != null">
+                `master_name` like CONCAT('%',#{keyword},'%')
+            </if>
+            <if test="kind == 'NAME_SUFFIX' and keyword != null">
+                 name_suffix like CONCAT('%',#{keyword},'%')
+            </if>
+            <if test="kind == 'VERIFY_CLASS' and keyword != null">
+                verify_class like CONCAT('%',#{keyword},'%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据渠道名称来获取渠道商ID -->
+    <select id="findMasterIdByName" resultType="String" parameterType="String">
+        SELECT m.master_id FROM ml_channel_master m WHERE m.master_name = #{mastername};
+    </select>
+</mapper>
+
+

@@ -1,0 +1,9 @@
+spring: 
+  cloud: 
+    config: 
+      name: sdkserver-eureka-ml02    #需要从github上读取的资源名称，注意没有yml后缀名
+      profile: dev  #开发
+    # profile: internal_test
+      label: master 
+      uri: http://127.0.0.1:3344      #SpringCloudConfig获取的服务地址
+

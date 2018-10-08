@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    config:
+      name: sdkserver-server-game    #需要从github上读取的资源名称，注意没有yml后缀名
+      profile: dev  #开发
+      # profile: internal_test
+      label: master
+      uri: http://172.16.20.140:3344      #SpringCloudConfig获取的服务地址
+

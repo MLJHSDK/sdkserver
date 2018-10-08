@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sdkserver.channel.mapper.ChannelMapper" >
+  <resultMap id="BaseResultMap" type="com.sdkserver.channel.model.Channel" >
+    <result column="channel_id" property="channelId" jdbcType="INTEGER" />
+    <result column="app_id" property="appId" jdbcType="INTEGER" />
+    <result column="cp_app_id" property="cpAppId" jdbcType="VARCHAR" />
+    <result column="cp_app_key" property="cpAppKey" jdbcType="VARCHAR" />
+    <result column="cp_app_secret" property="cpAppSecret" jdbcType="VARCHAR" />
+    <result column="cp_id" property="cpId" jdbcType="VARCHAR" />
+    <result column="cp_pay_id" property="cpPayId" jdbcType="VARCHAR" />
+    <result column="cp_pay_key" property="cpPayKey" jdbcType="VARCHAR" />
+    <result column="cp_pay_pri_key" property="cpPayPriKey" jdbcType="VARCHAR" />
+    <result column="master_id" property="masterId" jdbcType="INTEGER" />
+    <result column="cp_config" property="cpConfig" jdbcType="VARCHAR" />
+    <result column="auth_url" property="authUrl" jdbcType="VARCHAR" />
+    <result column="pay_callback_url" property="payCallbackUrl" jdbcType="VARCHAR" />
+    <result column="order_url" property="orderUrl" jdbcType="VARCHAR" />
+    <result column="verify_class" property="verifyClass" jdbcType="VARCHAR" />
+    <result column="open_pay_flag" property="openPayFlag" jdbcType="INTEGER" />
+    <result column="open_own_pay_channel" property="openOwnPayChannel" jdbcType="INTEGER" />
+    <result column="plat_id" property="platId" jdbcType="INTEGER" />
+  </resultMap>
+  <kind id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </kind>
+  <kind id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </kind>
+  <kind id="Base_Column_List" >
+    channel_id, app_id, cp_app_id, cp_app_key, cp_app_secret, cp_id, cp_pay_id, cp_pay_key, 
+    cp_pay_pri_key, master_id, cp_config, auth_url, pay_callback_url, order_url, verify_class, 
+    open_pay_flag, open_own_pay_channel, plat_id
+  </kind>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.sdkserver.channel.model.ChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ml_channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.sdkserver.channel.model.ChannelExample" >
+    delete from ml_channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.sdkserver.channel.model.Channel" >
+    insert into ml_channel (channel_id, app_id, cp_app_id, 
+      cp_app_key, cp_app_secret, cp_id, 
+      cp_pay_id, cp_pay_key, cp_pay_pri_key, 
+      master_id, cp_config, auth_url, 
+      pay_callback_url, order_url, verify_class, 
+      open_pay_flag, open_own_pay_channel, plat_id
+      )
+    values (#{channelId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{cpAppId,jdbcType=VARCHAR}, 
+      #{cpAppKey,jdbcType=VARCHAR}, #{cpAppSecret,jdbcType=VARCHAR}, #{cpId,jdbcType=VARCHAR}, 
+      #{cpPayId,jdbcType=VARCHAR}, #{cpPayKey,jdbcType=VARCHAR}, #{cpPayPriKey,jdbcType=VARCHAR}, 
+      #{masterId,jdbcType=INTEGER}, #{cpConfig,jdbcType=VARCHAR}, #{authUrl,jdbcType=VARCHAR}, 
+      #{payCallbackUrl,jdbcType=VARCHAR}, #{orderUrl,jdbcType=VARCHAR}, #{verifyClass,jdbcType=VARCHAR}, 
+      #{openPayFlag,jdbcType=INTEGER}, #{openOwnPayChannel,jdbcType=INTEGER}, #{platId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sdkserver.channel.model.Channel" >
+    insert into ml_channel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        channel_id,
+      </if>
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="cpAppId != null" >
+        cp_app_id,
+      </if>
+      <if test="cpAppKey != null" >
+        cp_app_key,
+      </if>
+      <if test="cpAppSecret != null" >
+        cp_app_secret,
+      </if>
+      <if test="cpId != null" >
+        cp_id,
+      </if>
+      <if test="cpPayId != null" >
+        cp_pay_id,
+      </if>
+      <if test="cpPayKey != null" >
+        cp_pay_key,
+      </if>
+      <if test="cpPayPriKey != null" >
+        cp_pay_pri_key,
+      </if>
+      <if test="masterId != null" >
+        master_id,
+      </if>
+      <if test="cpConfig != null" >
+        cp_config,
+      </if>
+      <if test="authUrl != null" >
+        auth_url,
+      </if>
+      <if test="payCallbackUrl != null" >
+        pay_callback_url,
+      </if>
+      <if test="orderUrl != null" >
+        order_url,
+      </if>
+      <if test="verifyClass != null" >
+        verify_class,
+      </if>
+      <if test="openPayFlag != null" >
+        open_pay_flag,
+      </if>
+      <if test="openOwnPayChannel != null" >
+        open_own_pay_channel,
+      </if>
+      <if test="platId != null" >
+        plat_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="channelId != null" >
+        #{channelId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null" >
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="cpAppId != null" >
+        #{cpAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="cpAppKey != null" >
+        #{cpAppKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cpAppSecret != null" >
+        #{cpAppSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="cpId != null" >
+        #{cpId,jdbcType=VARCHAR},
+      </if>
+      <if test="cpPayId != null" >
+        #{cpPayId,jdbcType=VARCHAR},
+      </if>
+      <if test="cpPayKey != null" >
+        #{cpPayKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cpPayPriKey != null" >
+        #{cpPayPriKey,jdbcType=VARCHAR},
+      </if>
+      <if test="masterId != null" >
+        #{masterId,jdbcType=INTEGER},
+      </if>
+      <if test="cpConfig != null" >
+        #{cpConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="authUrl != null" >
+        #{authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="payCallbackUrl != null" >
+        #{payCallbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="orderUrl != null" >
+        #{orderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyClass != null" >
+        #{verifyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="openPayFlag != null" >
+        #{openPayFlag,jdbcType=INTEGER},
+      </if>
+      <if test="openOwnPayChannel != null" >
+        #{openOwnPayChannel,jdbcType=INTEGER},
+      </if>
+      <if test="platId != null" >
+        #{platId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.sdkserver.channel.model.ChannelExample" resultType="java.lang.Integer" >
+    select count(*) from ml_channel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ml_channel
+    <set >
+      <if test="record.channelId != null" >
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null" >
+        app_id = #{record.appId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpAppId != null" >
+        cp_app_id = #{record.cpAppId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpAppKey != null" >
+        cp_app_key = #{record.cpAppKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpAppSecret != null" >
+        cp_app_secret = #{record.cpAppSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpId != null" >
+        cp_id = #{record.cpId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpPayId != null" >
+        cp_pay_id = #{record.cpPayId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpPayKey != null" >
+        cp_pay_key = #{record.cpPayKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cpPayPriKey != null" >
+        cp_pay_pri_key = #{record.cpPayPriKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.masterId != null" >
+        master_id = #{record.masterId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cpConfig != null" >
+        cp_config = #{record.cpConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authUrl != null" >
+        auth_url = #{record.authUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payCallbackUrl != null" >
+        pay_callback_url = #{record.payCallbackUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderUrl != null" >
+        order_url = #{record.orderUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyClass != null" >
+        verify_class = #{record.verifyClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openPayFlag != null" >
+        open_pay_flag = #{record.openPayFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.openOwnPayChannel != null" >
+        open_own_pay_channel = #{record.openOwnPayChannel,jdbcType=INTEGER},
+      </if>
+      <if test="record.platId != null" >
+        plat_id = #{record.platId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ml_channel
+    set channel_id = #{record.channelId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=INTEGER},
+      cp_app_id = #{record.cpAppId,jdbcType=VARCHAR},
+      cp_app_key = #{record.cpAppKey,jdbcType=VARCHAR},
+      cp_app_secret = #{record.cpAppSecret,jdbcType=VARCHAR},
+      cp_id = #{record.cpId,jdbcType=VARCHAR},
+      cp_pay_id = #{record.cpPayId,jdbcType=VARCHAR},
+      cp_pay_key = #{record.cpPayKey,jdbcType=VARCHAR},
+      cp_pay_pri_key = #{record.cpPayPriKey,jdbcType=VARCHAR},
+      master_id = #{record.masterId,jdbcType=INTEGER},
+      cp_config = #{record.cpConfig,jdbcType=VARCHAR},
+      auth_url = #{record.authUrl,jdbcType=VARCHAR},
+      pay_callback_url = #{record.payCallbackUrl,jdbcType=VARCHAR},
+      order_url = #{record.orderUrl,jdbcType=VARCHAR},
+      verify_class = #{record.verifyClass,jdbcType=VARCHAR},
+      open_pay_flag = #{record.openPayFlag,jdbcType=INTEGER},
+      open_own_pay_channel = #{record.openOwnPayChannel,jdbcType=INTEGER},
+      plat_id = #{record.platId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

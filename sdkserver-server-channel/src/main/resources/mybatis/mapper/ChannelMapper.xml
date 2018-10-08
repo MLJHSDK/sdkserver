@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sdkserver.channel.mapper.ChannelMapper">
+
+    <!--<select generator="getDeptById" resultType="Dept" parameterType="Long">-->
+		<!--select deptno,dname,db_source from dept where deptno=#{deptno};-->
+	<!--</select>-->
+    <!--<select generator="getDepts" resultType="Dept">-->
+		<!--select deptno,dname,db_source from dept;-->
+	<!--</select>-->
+    <!--<insert generator="addDept" parameterType="Dept">-->
+		<!--INSERT INTO dept(dname,db_source) VALUES(#{dname},DATABASE());-->
+	<!--</insert>-->
+    <!-- 表中所有字段名 -->
+    <sql id="ml_channel_colums">
+        app_id,auth_url,channel_id,cp_App_id,cp_App_Key,cp_App_Secret,cp_Config,cp_ID,cp_Pay_ID,
+               cp_Pay_Key,cp_Pay_Pri_Key,master_ID,open_Own_Pay_Channel,open_Pay_Flag,order_Url,pay_Callback_Url,
+               plat_ID,verify_Class
+    </sql>
+    <!-- 查找所有的渠道记录 -->
+    <select id="findAllChannels" resultType="Channel">
+        SELECT <include refid="ml_channel_colums"/> FROM ml_channel;
+    </select>
+
+    <!-- 插入一条渠道数据-->
+    <insert id="addChannel" parameterType="Channel">
+        INSERT INTO ml_channel(<include refid="ml_channel_colums"/>)
+                    VALUES(#{appID},#{authUrl},#{channelID},#{cpAppID},#{cpAppKey},#{cpAppSecret},#{cpConfig},#{cpID},#{cpPayID},
+                    #{cpPayKey},#{cpPayPriKey},#{masterID},#{openOwnPayChannel},#{openPayFlag},#{orderUrl},#{payCallbackUrl},
+                    #{platId},#{verifyClass});
+    </insert>
+    <!-- 根据ChannelId查询一条渠道记录 -->
+    <select id="queryChannelByID" parameterType="Integer" resultType="Channel">
+        SELECT c.* FROM ml_channel c WHERE c.channel_id = #{channelID};
+    </select>
+
+    <!-- 根据channelId删除一条渠道记录 -->
+    <delete id="deleteChannelById" parameterType="Integer">
+        DELETE FROM ml_channel WHERE channel_id = #{channelId};
+    </delete>
+
+    <!-- 根据appID来查询游戏下面渠道数量 -->
+    <select id="findChannelCountByAppId" parameterType="Integer" resultType="Integer">
+        SELECT COUNT(c.channel_id) FROM ml_channel c WHERE c.app_id = #{appId};
+    </select>
+
+    <!-- 更新渠道信息 -->
+    <update id="updateChannel" parameterType="Channel">
+        UPDATE ml_channel
+        <set>
+            <if test="appID != null and appID > 0">
+                app_id = #{appID,jdbcType=INTEGER},
+            </if>
+            <if test="authUrl != null and authUrl != ''">
+                auth_url = #{authUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAppID != null and cpAppID !=''">
+                cp_App_id = #{cpAppID,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAppKey != null and cpAppKey != ''">
+                cp_App_Key = #{cpAppKey,jdbcType=VARCHAR},
+            </if>
+            <if test="cpAppSecret != null and cpAppSecret != ''">
+                cp_App_Secret = #{cpAppSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="cpConfig != null and cpConfig != ''">
+                cp_Config = #{cpConfig,jdbcType=VARCHAR},
+            </if>
+            <if test="cpID != null and cpID != ''">
+                cp_ID = #{cpID,jdbcType=VARCHAR},
+            </if>
+            <if test="cpPayID != null and cpPayID != '' ">
+                cp_Pay_ID = #{cpPayID,jdbcType=VARCHAR},
+            </if>
+            <if test="cpPayKey != null and cpPayKey != ''">
+                cp_Pay_Key = #{cpPayKey,jdbcType=VARCHAR},
+            </if>
+            <if test="cpPayPriKey != null and cpPayPriKey != ''">
+                cp_Pay_Pri_Key = #{cpPayPriKey,jdbcType=VARCHAR},
+            </if>
+            <if test="masterID != null and masterID > 0 ">
+                master_ID = #{masterID,jdbcType=INTEGER},
+            </if>
+            <if test="openOwnPayChannel != null and openOwnPayChannel > 0">
+                open_Own_Pay_Channel = #{openOwnPayChannel,jdbcType=INTEGER},
+            </if>
+            <if test="openPayFlag != null and openPayFlag > 0">
+                open_Pay_Flag = #{openPayFlag,jdbcType=INTEGER},
+            </if>
+            <if test="orderUrl != null and orderUrl != '' ">
+                order_Url = #{orderUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="payCallbackUrl != null and payCallbackUrl != ''">
+                pay_Callback_Url = #{payCallbackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="platID != null and platID > 0">
+                plat_ID = #{platID,jdbcType=INTEGER},
+            </if>
+            <if test="verifyClass != null and verifyClass != ''">
+                verify_Class = #{verifyClass,jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE channel_id = #{channelID,jdbcType=INTEGER};
+    </update>
+
+    <!--
+        根据页面条件筛选渠道信息列表
+    -->
+    <select id="findPageChannels" resultType="Channel">
+        SELECT g.* from ml_channel g
+        <where>
+            <if test="kind == 'searchMasterName' and keyword != null and keyword != ''">
+                master_id = #{keyword}
+            </if>
+            <if test="kind == 'searchGameName' and keyword != null and keyword != ''">
+                app_id = #{keyword}
+            </if>
+            <if test="kind == 'channelID' and keyword != null and keyword != ''">
+                channel_ID = #{keyword}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+
+

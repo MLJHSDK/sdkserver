@@ -1,0 +1,9 @@
+#内测服务器：
+port:4365
+shenqi  shenqi#ML@1688
+
+sdkserver-config:3344
+sdkserver-eureka-ml01:7001
+sdkserver-eureka-ml02:7002
+sdkserver-eureka-ml03:7003
+
