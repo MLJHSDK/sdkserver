@@ -25,6 +25,7 @@
         <module>sdkserver-server-auth</module>
         <module>sdkserver-sdk</module>
         <module>sdkserver-pojo</module>
+        <module>sdkserver-server-log-stream</module>
     </modules>
 
     <properties>
